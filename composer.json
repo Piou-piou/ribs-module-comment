@@ -1,0 +1,12 @@
+{
+    "name": "piou-piou/ribs-module-comment",
+    "description": "This a blog module wich it run under Ribs-framework 2.3.5.6 and more. It can be used with any ribs module which run over Ribs 2.3.5.6",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Piou-piou",
+            "email": "pilloud.anthony@gmail.com"
+        }
+    ],
+    "require": {}
+}
