@@ -12,7 +12,10 @@
 		
 		//-------------------------- GETTER ----------------------------------------------------------------------------//
 		private function getRender($values) {
+			$loader = new \Twig_Loader_Filesystem(ROOT."modules/comment/app/views");
+			$twig = new \Twig_Environment($loader);
 			
+			return $twig->render("list-comment.html", $values);
 		}
 		
 		/**
@@ -41,7 +44,7 @@
 					];
 				}
 				
-				$this->getRender($values);
+				return $this->getRender($values);
 			}
 		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//

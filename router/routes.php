@@ -10,7 +10,7 @@
 		}
 		
 		if ($this->page == "index") {
-			$this->controller = "";
+			$this->controller = "comment/app/controller/initialise.php";
 		}
 	}
 	else {
