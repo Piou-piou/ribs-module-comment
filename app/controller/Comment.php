@@ -12,10 +12,13 @@
 		
 		//-------------------------- GETTER ----------------------------------------------------------------------------//
 		private function getRender($values) {
-			$loader = new \Twig_Loader_Filesystem(ROOT."modules/comment/app/views");
-			$twig = new \Twig_Environment($loader);
+			ob_start();
+			foreach ($values as $value) {
+				require(MODULEROOT."comment/app/views/list-comment.php");
+			}
+			$comments = ob_get_clean();
 			
-			return $twig->render("list-comment.html", $values);
+			return $comments;
 		}
 		
 		/**
