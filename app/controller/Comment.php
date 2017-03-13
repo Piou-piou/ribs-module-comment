@@ -5,12 +5,43 @@
 	use core\App;
 	
 	class Comment {
+		private $required_connection;
+		private $check_comment;
+		
 		//-------------------------- BUILDER ----------------------------------------------------------------------------//
+		public function __construct() {
+			$dbc = App::getDb();
+			
+			$query = $dbc->select()->from("_comment_configuration")->where("ID_configuration", "=", 1)->get();
+			
+			if ((is_array($query)) && (count($query) > 0)) {
+				foreach ($query as $obj) {
+					$this->required_connection = $obj->required_connection;
+					$this->check_comment = $obj->check_comment_publish;
+				}
+			}
+			else {
+				$this->required_connection = 0;
+				$this->check_comment = 0;
+			}
+		}
 		//-------------------------- END BUILDER ----------------------------------------------------------------------------//
 		
 		
 		
 		//-------------------------- GETTER ----------------------------------------------------------------------------//
+		public function getRequiredConnection() {
+		    return $this->required_connection;
+		}
+		public function getCheckComment() {
+		    return $this->check_comment;
+		}
+		
+		/**
+		 * @param $values
+		 * @return string
+		 * this function will get the view of list comments and form to write a comment
+		 */
 		private function getRender($values) {
 			ob_start();
 			foreach ($values as $value) {

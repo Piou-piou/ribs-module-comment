@@ -11,4 +11,12 @@
 		nom_id_table VARCHAR(255),
 		ID_in_table INT,
 		PRIMARY KEY (ID_comment)) ENGINE=InnoDB;
+		
+		DROP TABLE IF EXISTS _comment_configuration ;
+		CREATE TABLE _comment_configuration (
+		  ID_configuration INT AUTO_INCREMENT NOT NULL,
+		  required_connection int(11) DEFAULT NULL,
+		  check_comment_publish int(11) DEFAULT NULL,
+		  PRIMARY KEY (ID_configuration)
+		) ENGINE=InnoDB;
 	";
