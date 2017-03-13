@@ -16,6 +16,7 @@
 			foreach ($values as $value) {
 				require(MODULEROOT."comment/app/views/list-comment.php");
 			}
+			require(MODULEROOT."comment/app/views/write-comment.php");
 			$comments = ob_get_clean();
 			
 			return $comments;
@@ -43,7 +44,7 @@
 						"date" => $obj->date,
 						"first_name" => $obj->first_name,
 						"last_name" => $obj->last_name,
-						"ID_identite" => $obj->ID_identite,
+						"id_identite" => $obj->ID_identite,
 					];
 				}
 				
