@@ -7,6 +7,9 @@
 	class Comment {
 		private $required_connection;
 		private $check_comment;
+		private $table;
+		private $nom_id_table;
+		private $id_in_table;
 		
 		//-------------------------- BUILDER ----------------------------------------------------------------------------//
 		public function __construct() {
@@ -66,9 +69,8 @@
 			$query = $dbc->select()->from("_comment_all")->where("nom_table", "=", $table, "AND")
 				->where("nom_id_table", "=", $nom_id_table, "AND")->where("ID_in_table", "=", $id_in_table)->get();
 			
+			$values = [];
 			if (count($query) > 0) {
-				$values = [];
-				
 				foreach ($query as $obj) {
 					$values[] = [
 						"comment" => $obj->comment,
@@ -78,15 +80,22 @@
 						"id_identite" => $obj->ID_identite,
 					];
 				}
-				
-				return $this->getRender($values);
 			}
+			
+			$this->table = $table;
+			$this->nom_id_table = $nom_id_table;
+			$this->id_in_table = $id_in_table;
+			
+			return $this->getRender($values);
 		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 		
 		
 		
 		//-------------------------- SETTER ----------------------------------------------------------------------------//
+		public function setComment($table, $nom_id_table, $id_in_table) {
+			
+		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//
 		
 	}
