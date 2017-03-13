@@ -3,13 +3,17 @@
 	
 	
 	use core\App;
+	use core\auth\Membre;
+	use core\HTML\flashmessage\FlashMessage;
 	
 	class Comment {
 		private $required_connection;
 		private $check_comment;
 		private $table;
-		private $nom_id_table;
+		private $name_id_table;
 		private $id_in_table;
+		
+		
 		
 		//-------------------------- BUILDER ----------------------------------------------------------------------------//
 		public function __construct() {
@@ -58,16 +62,16 @@
 		
 		/**
 		 * @param $table
-		 * @param $nom_id_table
+		 * @param $name_id_table
 		 * @param $id_in_table
 		 * function wich get all comments of an other module like a article of a blog
 		 * after all coments was getted it will call getRender to use twig to render them
 		 */
-		public function getComments($table, $nom_id_table, $id_in_table) {
+		public function getComments($table, $name_id_table, $id_in_table) {
 			$dbc = App::getDb();
 			
-			$query = $dbc->select()->from("_comment_all")->where("nom_table", "=", $table, "AND")
-				->where("nom_id_table", "=", $nom_id_table, "AND")->where("ID_in_table", "=", $id_in_table)->get();
+			$query = $dbc->select()->from("_comment_all")->where("table_name", "=", $table, "AND")
+				->where("name_id_table", "=", $name_id_table, "AND")->where("ID_in_table", "=", $id_in_table)->get();
 			
 			$values = [];
 			if (count($query) > 0) {
@@ -75,15 +79,14 @@
 					$values[] = [
 						"comment" => $obj->comment,
 						"date" => $obj->date,
-						"first_name" => $obj->first_name,
-						"last_name" => $obj->last_name,
+						"pseudo" => $obj->pseudo,
 						"id_identite" => $obj->ID_identite,
 					];
 				}
 			}
 			
 			$this->table = $table;
-			$this->nom_id_table = $nom_id_table;
+			$this->name_id_table = $name_id_table;
 			$this->id_in_table = $id_in_table;
 			
 			return $this->getRender($values);
@@ -93,8 +96,39 @@
 		
 		
 		//-------------------------- SETTER ----------------------------------------------------------------------------//
-		public function setComment($table, $nom_id_table, $id_in_table) {
+		/**
+		 * @param $table
+		 * @param $name_id_table
+		 * @param $id_in_table
+		 * @param $comment
+		 * @param $pseudo
+		 * @return bool
+		 * function to add a comment if pseudo and comment != ""
+		 */
+		public function setComment($table, $name_id_table, $id_in_table, $comment, $pseudo) {
+			$dbc = App::getDb();
 			
+			if (is_int($pseudo)) {
+				$member = new Membre($pseudo);
+				$pseudo = $member->getPseudo();
+			}
+			
+			if (($pseudo != "") && ($comment != "")) {
+				$dbc->insert("table_name", $table)
+					->insert("name_id_table", $name_id_table)
+					->insert("ID_in_table", $id_in_table)
+					->insert("date", date("Y-m-d H:i:s"))
+					->insert("pseudo", $pseudo)
+					->insert("comment", $comment)
+					->into("_comment_all")
+					->set();
+				
+				FlashMessage::setFlash("Your comment was correctly added", "success");
+				return true;
+			}
+			
+			FlashMessage::setFlash("You must enter a pseudo and a comment to publish a comment");
+			return false;
 		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//
 		
