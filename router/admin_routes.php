@@ -4,7 +4,7 @@
 	];
 	
 	if (\core\modules\GestionModule::getModuleActiver("comment")) {
-		if (!in_array($this->page, $pages_blog)) {
+		if (!in_array($this->page, $pages_comment)) {
 			\core\HTML\flashmessage\FlashMessage::setFlash("This page doesn't exist");
 			header("location:".ADMWEBROOT);
 		}
