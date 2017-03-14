@@ -43,6 +43,9 @@
 		    return $this->check_comment;
 		}
 		
+		/**
+		 * function to display message after comment creation in bdd
+		 */
 		private function getSuccessMessagePublish() {
 			if ($this->check_comment == 1) {
 				FlashMessage::setFlash("Your comment was correctly added, it will be displayed on website when an admin validate it", "success");
@@ -50,6 +53,18 @@
 			else {
 				FlashMessage::setFlash("Your comment was correctly added", "success");
 			}
+		}
+		
+		/**
+		 * @return int
+		 * if check_comment unable return 1 to automaticly check a comment
+		 */
+		private function getCheckPublishComment() {
+			if ($this->check_comment == 0) {
+				return 1;
+			}
+			
+			return 0;
 		}
 		
 		/**
@@ -78,7 +93,7 @@
 			$dbc = App::getDb();
 			
 			$query = $dbc->select()->from("_comment_all")->where("table_name", "=", $table, "AND")
-				->where("ID_in_table", "=", $id_in_table)->get();
+				->where("ID_in_table", "=", $id_in_table, "AND")->where("checked", "=", 1)->get();
 			
 			$values = [];
 			if (count($query) > 0) {
@@ -120,7 +135,7 @@
 			
 			if (($pseudo != "") && ($comment != "")) {
 				$dbc->insert("table_name", $table)->insert("ID_in_table", $id_in_table)->insert("date", date("Y-m-d H:i:s"))
-					->insert("pseudo", $pseudo)->insert("comment", $comment)->into("_comment_all")->set();
+					->insert("pseudo", $pseudo)->insert("comment", $comment)->into("_comment_all")->insert("checked", $this->getCheckPublishComment())->set();
 				
 				$this->getSuccessMessagePublish();
 				return true;
