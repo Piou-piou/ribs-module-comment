@@ -110,13 +110,8 @@
 			}
 			
 			if (($pseudo != "") && ($comment != "")) {
-				$dbc->insert("table_name", $table)
-					->insert("ID_in_table", $id_in_table)
-					->insert("date", date("Y-m-d H:i:s"))
-					->insert("pseudo", $pseudo)
-					->insert("comment", $comment)
-					->into("_comment_all")
-					->set();
+				$dbc->insert("table_name", $table)->insert("ID_in_table", $id_in_table)->insert("date", date("Y-m-d H:i:s"))
+					->insert("pseudo", $pseudo)->insert("comment", $comment)->into("_comment_all")->set();
 				
 				FlashMessage::setFlash("Your comment was correctly added", "success");
 				return true;
