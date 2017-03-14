@@ -8,7 +8,6 @@
 		
 		<input type="hidden" name="return_page" value="http://<?=$_SERVER[HTTP_HOST].$_SERVER[REQUEST_URI]?>">
 		<input type="hidden" name="table" value="<?=$this->table?>">
-		<input type="hidden" name="name_id_table" value="<?=$this->name_id_table?>">
 		<input type="hidden" name="id_in_table" value="<?=$this->id_in_table?>">
 	</form>
 <?php else: ?>

@@ -10,7 +10,6 @@
 		private $required_connection;
 		private $check_comment;
 		private $table;
-		private $name_id_table;
 		private $id_in_table;
 		
 		
@@ -62,16 +61,15 @@
 		
 		/**
 		 * @param $table
-		 * @param $name_id_table
 		 * @param $id_in_table
 		 * function wich get all comments of an other module like a article of a blog
 		 * after all coments was getted it will call getRender to use twig to render them
 		 */
-		public function getComments($table, $name_id_table, $id_in_table) {
+		public function getComments($table, $id_in_table) {
 			$dbc = App::getDb();
 			
 			$query = $dbc->select()->from("_comment_all")->where("table_name", "=", $table, "AND")
-				->where("name_id_table", "=", $name_id_table, "AND")->where("ID_in_table", "=", $id_in_table)->get();
+				->where("ID_in_table", "=", $id_in_table)->get();
 			
 			$values = [];
 			if (count($query) > 0) {
@@ -86,7 +84,6 @@
 			}
 			
 			$this->table = $table;
-			$this->name_id_table = $name_id_table;
 			$this->id_in_table = $id_in_table;
 			
 			return $this->getRender($values);
@@ -98,14 +95,13 @@
 		//-------------------------- SETTER ----------------------------------------------------------------------------//
 		/**
 		 * @param $table
-		 * @param $name_id_table
 		 * @param $id_in_table
 		 * @param $comment
 		 * @param $pseudo
 		 * @return bool
 		 * function to add a comment if pseudo and comment != ""
 		 */
-		public function setComment($table, $name_id_table, $id_in_table, $comment, $pseudo) {
+		public function setComment($table, $id_in_table, $comment, $pseudo) {
 			$dbc = App::getDb();
 			
 			if (is_int($pseudo)) {
@@ -115,7 +111,6 @@
 			
 			if (($pseudo != "") && ($comment != "")) {
 				$dbc->insert("table_name", $table)
-					->insert("name_id_table", $name_id_table)
 					->insert("ID_in_table", $id_in_table)
 					->insert("date", date("Y-m-d H:i:s"))
 					->insert("pseudo", $pseudo)
