@@ -127,6 +127,7 @@
 		 */
 		public function setComment($table, $id_in_table, $comment, $pseudo) {
 			$dbc = App::getDb();
+			$id_identite = null;
 			
 			if (is_numeric($pseudo)) {
 				$member = new Membre($pseudo);
