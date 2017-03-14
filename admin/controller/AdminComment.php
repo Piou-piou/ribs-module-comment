@@ -23,7 +23,7 @@
 		/**
 		 * function that get a list of all table_name wich are in comment module
 		 */
-		public function getAllTableComment() {
+		public function getAllTable() {
 			$dbc = App::getDb();
 			
 			$query = $dbc->select("table_name, ID_in_table")->from("_comment_all")->groupBy("ID_in_table, table_name")->get();
@@ -41,6 +41,32 @@
 				
 				$this->setValues($values);
 			}
+		}
+		
+		/**
+		 * @param $table
+		 * @param $id_in_table
+		 * function to get all comments of a table with an id
+		 */
+		public function getAllComment($table, $id_in_table) {
+			$dbc = App::getDb();
+			
+			$query = $dbc->select()->from("_comment_all")->where("table_name", "=", $table, "AND")
+				->where("ID_in_table", "=", $id_in_table)->orderBy("checked", "DESC")->get();
+			
+			$values = [];
+			if (count($query) > 0) {
+				foreach ($query as $obj) {
+					$values[] = [
+						"comment" => $obj->comment,
+						"date" => $obj->date,
+						"pseudo" => $obj->pseudo,
+						"id_identite" => $obj->ID_identite,
+					];
+				}
+			}
+			
+			$this->setValues($values);
 		}
 		
 		/**

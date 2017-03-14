@@ -1,6 +1,6 @@
 <?php
 	$comment = new \modules\comment\admin\controller\AdminComment();
 	
-	$comment->getAllTableComment();
+	$comment->getAllTable();
 	
 	$arr = $comment->getValues();
