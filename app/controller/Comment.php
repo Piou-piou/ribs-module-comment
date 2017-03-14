@@ -43,6 +43,15 @@
 		    return $this->check_comment;
 		}
 		
+		private function getSuccessMessagePublish() {
+			if ($this->check_comment == 1) {
+				FlashMessage::setFlash("Your comment was correctly added, it will be displayed on website when an admin validate it", "success");
+			}
+			else {
+				FlashMessage::setFlash("Your comment was correctly added", "success");
+			}
+		}
+		
 		/**
 		 * @param $values
 		 * @return string
@@ -113,7 +122,7 @@
 				$dbc->insert("table_name", $table)->insert("ID_in_table", $id_in_table)->insert("date", date("Y-m-d H:i:s"))
 					->insert("pseudo", $pseudo)->insert("comment", $comment)->into("_comment_all")->set();
 				
-				FlashMessage::setFlash("Your comment was correctly added", "success");
+				$this->getSuccessMessagePublish();
 				return true;
 			}
 			
