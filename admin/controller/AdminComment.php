@@ -26,13 +26,14 @@
 		public function getAllTableComment() {
 			$dbc = App::getDb();
 			
-			$query = $dbc->select("table_name")->from("_comment_all")->groupBy("table_name")->get();
+			$query = $dbc->select("table_name, ID_in_table")->from("_comment_all")->groupBy("ID_in_table, table_name")->get();
 			
 			if ((is_array($query)) && (count($query) > 0)) {
 				$values = [];
 				foreach ($query as $obj) {
 					$values[] = [
 						"table_name" => str_replace("_", " ", $obj->table_name),
+						"id_in_table" => $obj->ID_in_table,
 						"nb_checked_comment" => $this->getNbCheckedComment($obj->table_name, 1),
 						"nb_unchecked_comment" => $this->getNbCheckedComment($obj->table_name, 0),
 					];

@@ -1,1 +1,15 @@
 {% include("header.html") %}
+
+<div class="inner">
+	<div class="added-module">
+		{% for i in comment %}
+			<div class="full-bloc">
+				<a class="submit-contenu submit-standard" href="">Access</a>
+				
+				<h2>{{ i.table_name }} with ID : {{ i.id_in_table }}</h2>
+				<p>Checked comments : {{ i.nb_checked_comment }}</p>
+				<p>Unchecked comments : {{ i.nb_unchecked_comment }}</p>
+			</div>
+		{% endfor %}
+	</div>
+</div>
