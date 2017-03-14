@@ -128,14 +128,16 @@
 		public function setComment($table, $id_in_table, $comment, $pseudo) {
 			$dbc = App::getDb();
 			
-			if (is_int($pseudo)) {
+			if (is_numeric($pseudo)) {
 				$member = new Membre($pseudo);
 				$pseudo = $member->getPseudo();
+				$id_identite = $member->getIdidentite();
 			}
 			
 			if (($pseudo != "") && ($comment != "")) {
 				$dbc->insert("table_name", $table)->insert("ID_in_table", $id_in_table)->insert("date", date("Y-m-d H:i:s"))
-					->insert("pseudo", $pseudo)->insert("comment", $comment)->into("_comment_all")->insert("checked", $this->getCheckPublishComment())->set();
+					->insert("pseudo", $pseudo)->insert("comment", $comment)->into("_comment_all")->insert("checked", $this->getCheckPublishComment())
+					->insert("ID_identite", $id_identite)->set();
 				
 				$this->getSuccessMessagePublish();
 				return true;
