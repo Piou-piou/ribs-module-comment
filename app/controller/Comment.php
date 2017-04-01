@@ -139,11 +139,9 @@
 				$dbc->insert("table_name", $table)->insert("ID_in_table", $id_in_table)->insert("date", date("Y-m-d H:i:s"))
 					->insert("pseudo", $pseudo)->insert("comment", $comment)->into("_comment_all")->insert("checked", $this->getCheckPublishComment())
 					->insert("ID_identite", $id_identite)->set();
-				
 				$this->getSuccessMessagePublish();
 				return true;
 			}
-			
 			FlashMessage::setFlash("You must enter a pseudo and a comment to publish a comment");
 			return false;
 		}
