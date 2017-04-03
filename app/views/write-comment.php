@@ -1,4 +1,4 @@
-<?php if ((($this->required_connection == 1) && (isset($_SESSION['idlogin'.CLEF_SITE]))) || ($this->required_connection == 0)):?>
+ <?php if ((($this->required_connection == 1) && (isset($_SESSION['idlogin'.CLEF_SITE]))) || ($this->required_connection == 0)):?>
 	<form action="<?=WEBROOT?>controller/modules/comment/write_comment" method="post" class="row">
 		<?php if (!isset($_SESSION['idlogin'.CLEF_SITE])):?>
 			<input type="text" name="pseudo" placeholder="Your pseudo">
