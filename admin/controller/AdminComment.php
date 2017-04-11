@@ -5,6 +5,7 @@
 	use modules\comment\app\controller\Comment;
 	
 	class AdminComment extends Comment {
+		public static $router_parameter;
 		private $values = [];
 		
 		//-------------------------- BUILDER ----------------------------------------------------------------------------//
@@ -32,6 +33,7 @@
 				$values = [];
 				foreach ($query as $obj) {
 					$values[] = [
+						"table" => $obj->table_name,
 						"table_name" => str_replace("_", " ", $obj->table_name),
 						"id_in_table" => $obj->ID_in_table,
 						"nb_checked_comment" => $this->getNbCheckedComment($obj->table_name, 1),
@@ -41,32 +43,6 @@
 				
 				$this->setValues($values);
 			}
-		}
-		
-		/**
-		 * @param $table
-		 * @param $id_in_table
-		 * function to get all comments of a table with an id
-		 */
-		public function getAllComment($table, $id_in_table) {
-			$dbc = App::getDb();
-			
-			$query = $dbc->select()->from("_comment_all")->where("table_name", "=", $table, "AND")
-				->where("ID_in_table", "=", $id_in_table)->orderBy("checked", "DESC")->get();
-			
-			$values = [];
-			if (count($query) > 0) {
-				foreach ($query as $obj) {
-					$values[] = [
-						"comment" => $obj->comment,
-						"date" => $obj->date,
-						"pseudo" => $obj->pseudo,
-						"id_identite" => $obj->ID_identite,
-					];
-				}
-			}
-			
-			$this->setValues($values);
 		}
 		
 		/**
@@ -82,6 +58,34 @@
 				->where("checked", "=", $checked)->get();
 			
 			return count($query);
+		}
+		
+		/**
+		 * @param $id_in_table
+		 * function wich get all comments of an other module like a article of a blog
+		 * after all coments was getted it will call getRender to use twig to render them
+		 */
+		public function getComments($id_in_table) {
+			$dbc = App::getDb();
+			
+			$query = $dbc->select()->from("_comment_all")->where("table_name", "=", self::$router_parameter, "AND")
+				->where("ID_in_table", "=", $id_in_table)->get();
+			
+			$values = [];
+			if (count($query) > 0) {
+				foreach ($query as $obj) {
+					$values[] = [
+						"id_comment" => $obj->ID_comment,
+						"comment" => $obj->comment,
+						"checked" => $obj->checked,
+						"date" => $obj->date,
+						"pseudo" => $obj->pseudo,
+						"id_identite" => $obj->ID_identite,
+					];
+				}
+			}
+			
+			$this->setValues($values);
 		}
 		//-------------------------- END GETTER ----------------------------------------------------------------------------//
 		

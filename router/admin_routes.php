@@ -1,6 +1,7 @@
 <?php
 	$pages_comment = [
 		"index",
+		"check-comment"
 	];
 	
 	if (\core\modules\GestionModule::getModuleActiver("comment")) {
@@ -11,6 +12,11 @@
 		
 		if ($this->page == "index") {
 			$this->controller = "comment/admin/controller/initialise/index.php";
+		}
+		
+		if ($this->page == "check-comment") {
+			\modules\comment\admin\controller\AdminComment::$router_parameter = $this->parametre;
+			$this->controller = "comment/admin/controller/initialise/check_comment.php";
 		}
 	}
 	else {

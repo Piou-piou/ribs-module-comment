@@ -1,14 +1,20 @@
 {% include("header.html") %}
+<link rel="stylesheet" type="text/css" href="{{ LIBSWEBROOT }}checkbox/css/style.css">
+<script src="{{ LIBSWEBROOT }}checkbox/js/anim.js"></script>
+
 
 <div class="inner">
 	<div class="added-module">
 		{% for i in comment %}
 			<div class="full-bloc">
-				<a class="submit-contenu submit-standard" href="">Access</a>
+				<a class="submit-contenu submit-standard supprimer-page" href="">Delete</a>
+				
+				<label for="valide" class="checkbox-perso switched">Commentaire validé
+					<input type="checkbox" class="test-check" id="valide" name="valide" {% if i.checked == 1 %}checked{% endif %}>
+				</label>
 
-				<h2>{{ i.table_name }} with ID : {{ i.id_in_table }}</h2>
-				<p>Checked comments : {{ i.nb_checked_comment }}</p>
-				<p>Unchecked comments : {{ i.nb_unchecked_comment }}</p>
+				<h2>Written by{{ i.pseudo }} the {{ i.date|date("Y/m/d") }} at {{ i.date|date("H:i:s") }}</h2>
+				<p>{{ i.comment }}</p>
 			</div>
 		{% endfor %}
 	</div>
