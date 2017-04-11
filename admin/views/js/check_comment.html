@@ -1,0 +1,25 @@
+<script>
+	$(document).ready(function() {
+		$(".valide").click(function () {
+		    var id_string = $(this).attr("id");
+		    var id = id_string.split("-")[1];
+		    var checked = 0;
+			
+		    if ($(this).is(":checked")) {
+		        checked = 1;
+		    }
+            
+            $.ajax({
+                method: 'POST',
+                url:"{{ADMWEBROOT}}controller/modules/comment/comment/change_check.php",
+                data: "id_comment="+id+"&checked="+checked,
+                success: function(data){
+                    $("body").prepend(data);
+                }
+            });
+		    
+		    
+		    console.log(id+" -- "+checked);
+        })
+	});
+</script>

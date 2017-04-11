@@ -1,7 +1,7 @@
 {% include("header.html") %}
 <link rel="stylesheet" type="text/css" href="{{ LIBSWEBROOT }}checkbox/css/style.css">
 <script src="{{ LIBSWEBROOT }}checkbox/js/anim.js"></script>
-
+{% include("js/check_comment.html") %}
 
 <div class="inner">
 	<div class="added-module">
@@ -9,8 +9,8 @@
 			<div class="full-bloc">
 				<a class="submit-contenu submit-standard supprimer-page" href="">Delete</a>
 				
-				<label for="valide" class="checkbox-perso switched">Commentaire validé
-					<input type="checkbox" class="test-check" id="valide" name="valide" {% if i.checked == 1 %}checked{% endif %}>
+				<label for="valide-{{ i.id_comment }}" class="checkbox-perso switched">Commentaire validé
+					<input type="checkbox" class="valide" id="valide-{{ i.id_comment }}" name="valide-{{ i.id_comment }}" {% if i.checked == 1 %}checked{% endif %}>
 				</label>
 
 				<h2>Written by{{ i.pseudo }} the {{ i.date|date("Y/m/d") }} at {{ i.date|date("H:i:s") }}</h2>

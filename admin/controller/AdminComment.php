@@ -2,6 +2,7 @@
 	namespace modules\comment\admin\controller;
 	
 	use core\App;
+	use core\HTML\flashmessage\FlashMessage;
 	use modules\comment\app\controller\Comment;
 	
 	class AdminComment extends Comment {
@@ -97,6 +98,18 @@
 		 */
 		public function setValues($values) {
 			$this->values = array_merge($this->values, $values);
+		}
+		
+		/**
+		 * @param $id_comment
+		 * @param $checked
+		 * function that it is used to change if a comment is changed or not
+		 */
+		public function setChangeCheck($id_comment, $checked) {
+			$dbc = App::getDb();
+			
+			$dbc->update("checked", $checked)->from("_comment_all")->where("ID_comment", "=", $id_comment)->set();
+			FlashMessage::setFlash("The status of the comment was correctly changed", "success");
 		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//    
 	}
