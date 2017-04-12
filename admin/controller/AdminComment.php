@@ -127,5 +127,13 @@
 			
 			FlashMessage::setFlash("Comment was correctly deleted", "success");
 		}
+		
+		public function setChangeConfiguration($parameter, $checked) {
+			$dbc = App::getDb();
+			
+			$dbc->update($parameter, $checked)->from("_comment_configuration")->where("ID_configuration", "=", 1)->set();
+		
+			FlashMessage::setFlash("The configuration was correctly updated", "success");
+		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//    
 	}

@@ -1,0 +1,36 @@
+{% include("header.html") %}
+<link rel="stylesheet" type="text/css" href="{{LIBSWEBROOT}}checkbox/css/style.css">
+<script src="{{LIBSWEBROOT}}checkbox/js/anim.js"></script>
+{% include("js/configuration.html") %}
+
+<div class="inner">
+	<div class="contenu modifier-contenu gestion-comptes configuration">
+		<h2>Options</h2>
+		<table>
+			<thead>
+				<tr>
+					<td>Option</td>
+					<td>Active</td>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Required connection</td>
+					<td>
+						<label for="required_connection" class="checkbox-perso switched">
+							<input type="checkbox" class="valide" id="required_connection" {% if required_connection == 1 %}checked{%   endif %}>
+						</label>
+					</td>
+				</tr>
+				<tr>
+					<td>Check comment</td>
+					<td>
+						<label for="check_comment_publish" class="checkbox-perso switched">
+							<input type="checkbox" class="valide" id="check_comment_publish" {% if check_comment == 1 %}checked{%   endif %}>
+						</label>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</div>

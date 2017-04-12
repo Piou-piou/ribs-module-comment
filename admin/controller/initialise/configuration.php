@@ -1,7 +1,7 @@
 <?php
-	/**
-	 * Created by PhpStorm.
-	 * User: anthony
-	 * Date: 12/04/17
-	 * Time: 15:58
-	 */
+	$comment = new \modules\comment\admin\controller\AdminComment();
+	
+	$arr = [
+		"required_connection" => $comment->getRequiredConnection(),
+		"check_comment" => $comment->getCheckComment()
+	];
