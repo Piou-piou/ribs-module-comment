@@ -1,7 +1,8 @@
 <?php
 	$pages_comment = [
 		"index",
-		"check-comment"
+		"check-comment",
+		"configuration"
 	];
 	
 	if (\core\modules\GestionModule::getModuleActiver("comment")) {
@@ -17,6 +18,11 @@
 		if ($this->page == "check-comment") {
 			\modules\comment\admin\controller\AdminComment::$router_parameter = $this->parametre;
 			$this->controller = "comment/admin/controller/initialise/check_comment.php";
+		}
+		
+		if ($this->page == "configuration") {
+			\modules\comment\admin\controller\AdminComment::$router_parameter = $this->parametre;
+			$this->controller = "comment/admin/controller/initialise/configuration.php";
 		}
 	}
 	else {

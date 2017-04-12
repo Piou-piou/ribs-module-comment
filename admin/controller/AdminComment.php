@@ -112,10 +112,15 @@
 			FlashMessage::setFlash("The status of the comment was correctly changed", "success");
 		}
 		
+		/**
+		 * @param $id_comment
+		 * @param $table
+		 * function that is used to delete a comment
+		 */
 		public function setDeleteComment($id_comment, $table) {
 			$dbc = App::getDb();
-			
-			$table = end(explode("/", $table));
+			$explode = explode("/", $table);
+			$table = end($explode);
 			
 			$dbc->delete()->from("_comment_all")->where("ID_comment", "=", $id_comment, "AND")
 				->where("table_name", "=", $table)->del();
