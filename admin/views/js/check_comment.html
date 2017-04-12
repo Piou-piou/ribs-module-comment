@@ -1,5 +1,6 @@
 <script>
 	$(document).ready(function() {
+	    //to check or uncheck a comment
 		$(".valide").click(function () {
 		    var id_string = $(this).attr("id");
 		    var id = id_string.split("-")[1];
@@ -17,9 +18,8 @@
                     $("body").prepend(data);
                 }
             });
-		    
-		    
-		    console.log(id+" -- "+checked);
-        })
+        });
+		
+		
 	});
 </script>

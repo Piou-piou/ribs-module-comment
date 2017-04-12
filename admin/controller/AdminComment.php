@@ -111,5 +111,16 @@
 			$dbc->update("checked", $checked)->from("_comment_all")->where("ID_comment", "=", $id_comment)->set();
 			FlashMessage::setFlash("The status of the comment was correctly changed", "success");
 		}
+		
+		public function setDeleteComment($id_comment, $table) {
+			$dbc = App::getDb();
+			
+			$table = end(explode("/", $table));
+			
+			$dbc->delete()->from("_comment_all")->where("ID_comment", "=", $id_comment, "AND")
+				->where("table_name", "=", $table)->del();
+			
+			FlashMessage::setFlash("Comment was correctly deleted", "success");
+		}
 		//-------------------------- END SETTER ----------------------------------------------------------------------------//    
 	}
