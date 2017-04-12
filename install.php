@@ -18,4 +18,6 @@
 		  check_comment_publish int(11) DEFAULT NULL,
 		  PRIMARY KEY (ID_configuration)
 		) ENGINE=InnoDB;
+		
+		INSERT INTO _comment_configuration (required_connection, check_comment_publish) VALUES (0, 0);
 	";
