@@ -128,6 +128,11 @@
 			FlashMessage::setFlash("Comment was correctly deleted", "success");
 		}
 		
+		/**
+		 * @param $parameter
+		 * @param $checked
+		 * function that checck or uncheck a parameter in configuration
+		 */
 		public function setChangeConfiguration($parameter, $checked) {
 			$dbc = App::getDb();
 			
